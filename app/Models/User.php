@@ -13,6 +13,10 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_DOCTOR = 'doctor';
+    const ROLE_PATIENT = 'patient';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +26,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
