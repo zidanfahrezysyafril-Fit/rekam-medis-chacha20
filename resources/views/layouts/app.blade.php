@@ -14,6 +14,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             body { font-family: 'Outfit', sans-serif; }
             .sidebar-gradient {
@@ -24,6 +26,18 @@
                 backdrop-filter: blur(8px);
                 -webkit-backdrop-filter: blur(8px);
                 border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            }
+            .glass-card {
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(226, 232, 240, 0.8);
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                transition: all 0.3s ease;
+            }
+            .glass-card:hover {
+                box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(14, 165, 233, 0.05);
+                transform: translateY(-2px);
+                border-color: rgba(14, 165, 233, 0.2);
             }
         </style>
     </head>
