@@ -40,10 +40,23 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, .75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, .5);
-            transition: .3s;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, .45),
+                    rgba(34, 211, 238, .12),
+                    rgba(20, 184, 166, .08));
+
+            backdrop-filter: blur(25px);
+
+            border: 1px solid rgba(34, 211, 238, .25);
+
+            box-shadow:
+                0 0 20px rgba(34, 211, 238, .08),
+                inset 0 0 20px rgba(255, 255, 255, .15);
+
+            transition: all .35s ease;
+
+            position: relative;
+            overflow: hidden;
         }
 
         .glass-card:hover {
