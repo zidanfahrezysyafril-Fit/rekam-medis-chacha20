@@ -2,11 +2,23 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\OtpController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware('guest')->group(function () {
+    Route::get('/verify-otp', [OtpController::class, 'show'])->name('otp.verify');
+    Route::post('/verify-otp', [OtpController::class, 'verify'])->name('otp.verify.submit');
+    Route::post('/resend-otp', [OtpController::class, 'resend'])->name('otp.resend');
+});
 
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
+});
 Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
