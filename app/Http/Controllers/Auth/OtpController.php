@@ -49,10 +49,8 @@ class OtpController extends Controller
 
         session()->forget('otp_user_id');
 
-        Auth::login($user);
-
-        return redirect()->route('dashboard')
-            ->with('success', 'Email berhasil diverifikasi!');
+        return redirect()->route('login')
+            ->with('success', 'Email berhasil diverifikasi! Silakan login.');
     }
 
     public function resend()
