@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="mb-6 flex justify-end gap-3">
-        <a href="{{ route('patient.medical-records.export-pdf', $medicalRecord) }}" class="inline-flex items-center justify-center px-4 py-2 bg-red-50 border border-red-200 rounded-xl font-bold text-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors shadow-sm">
+        <a href="{{ route('patient.medical-records.pdf', $medicalRecord) }}" class="inline-flex items-center justify-center px-4 py-2 bg-red-50 border border-red-200 rounded-xl font-bold text-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors shadow-sm">
             <i class="fa-solid fa-file-pdf mr-2"></i> Download PDF
         </a>
     </div>

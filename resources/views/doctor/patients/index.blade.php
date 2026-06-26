@@ -45,7 +45,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-900">{{ \Carbon\Carbon::parse($patient->date_of_birth)->age }} Tahun ({{ $patient->gender == 'L' ? 'L' : 'P' }})</div>
+                                <div class="text-sm text-slate-900">{{ \Carbon\Carbon::parse($patient->date_of_birth)->age }} Tahun ({{ $patient->gender == 'Male' ? 'L' : 'P' }})</div>
                                 <div class="text-xs text-slate-500">Gol. Darah: <span class="font-bold text-red-500">{{ $patient->blood_type ?? '-' }}</span></div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">

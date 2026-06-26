@@ -15,7 +15,7 @@
         <a href="{{ route('doctor.medical-records.edit', $medicalRecord) }}" class="inline-flex items-center justify-center px-4 py-2 bg-white border border-slate-300 rounded-xl font-bold text-sm text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
             <i class="fa-solid fa-pen-to-square mr-2 text-blue-500"></i> Edit Data
         </a>
-        <a href="{{ route('doctor.medical-records.export-pdf', $medicalRecord) }}" class="inline-flex items-center justify-center px-4 py-2 bg-red-50 border border-red-200 rounded-xl font-bold text-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors shadow-sm">
+        <a href="{{ route('doctor.medical-records.pdf', $medicalRecord) }}" class="inline-flex items-center justify-center px-4 py-2 bg-red-50 border border-red-200 rounded-xl font-bold text-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors shadow-sm">
             <i class="fa-solid fa-file-pdf mr-2"></i> Download PDF
         </a>
     </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Jenis Kelamin</p>
-                        <p class="text-sm font-bold text-slate-900">{{ $medicalRecord->patient->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
+                        <p class="text-sm font-bold text-slate-900">{{ $medicalRecord->patient->gender == 'Male' ? 'Laki-laki' : 'Perempuan' }}</p>
                     </div>
                     <div>
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Gol. Darah</p>

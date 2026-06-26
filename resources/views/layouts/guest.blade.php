@@ -42,15 +42,24 @@
                     </div>
                     <span class="text-2xl font-extrabold tracking-tight text-slate-900">SecureEMR</span>
                 </a>
-                <p class="mt-3 text-slate-500 text-sm font-medium">ChaCha20 Encrypted Health Portal</p>
+                <p class="mt-3 text-slate-500 text-sm font-medium">Portal Kesehatan Terenkripsi ChaCha20</p>
             </div>
 
             <div class="w-full sm:max-w-md px-8 py-10 glass-panel shadow-2xl shadow-blue-900/5 sm:rounded-[2rem]">
                 {{ $slot }}
             </div>
             
-            <div class="mt-8 text-center text-xs text-slate-400 font-medium">
-                &copy; {{ date('Y') }} SecureEMR System. All data is end-to-end encrypted.
+            <div class="mt-8 relative z-10 w-full sm:max-w-md">
+                <div class="flex flex-col items-center justify-center gap-3 bg-white/30 backdrop-blur-sm border border-white/50 p-5 rounded-[2rem] shadow-sm">
+                    <div class="flex items-center gap-2 bg-gradient-to-r from-green-50/80 to-emerald-50/80 px-4 py-2 rounded-xl border border-green-200/50">
+                        <i class="fa-solid fa-shield-check text-green-500 text-sm"></i>
+                        <span class="font-bold text-green-700 text-[11px] tracking-wide uppercase">Dilindungi ChaCha20-Poly1305</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-slate-500 font-bold">&copy; {{ date('Y') }} SecureEMR System</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Sistem Rekam Medis Terenkripsi End-to-End</p>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

@@ -4,7 +4,7 @@
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white shadow-lg">
                 <i class="fa-solid fa-chart-pie"></i>
             </div>
-            Admin Overview
+            Ringkasan Admin
         </div>
     </x-slot>
 
@@ -14,8 +14,8 @@
         <div class="absolute right-0 bottom-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl translate-y-1/4 translate-x-1/4"></div>
         
         <div class="relative z-10">
-            <h2 class="text-2xl md:text-3xl font-bold mb-2">Welcome back, {{ Auth::user()->name }}! 👋</h2>
-            <p class="text-slate-300 max-w-2xl">Here is what's happening with the MedSecure system today. Monitor user activity, doctor registrations, and patient records all in one place.</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-2">Selamat datang kembali, {{ Auth::user()->name }}! 👋</h2>
+            <p class="text-slate-300 max-w-2xl">Berikut adalah ringkasan sistem MedSecure hari ini. Pantau aktivitas pengguna, pendaftaran dokter, dan rekam medis pasien di satu tempat.</p>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
                 <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4 shadow-inner">
                     <i class="fa-solid fa-users"></i>
                 </div>
-                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Total Users</div>
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Total Pengguna</div>
                 <div class="text-3xl font-extrabold text-slate-900">{{ $stats['users'] }}</div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="w-12 h-12 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl mb-4 shadow-inner">
                     <i class="fa-solid fa-user-doctor"></i>
                 </div>
-                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Doctors</div>
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Dokter</div>
                 <div class="text-3xl font-extrabold text-slate-900">{{ $stats['doctors'] }}</div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mb-4 shadow-inner">
                     <i class="fa-solid fa-hospital-user"></i>
                 </div>
-                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Patients</div>
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Pasien</div>
                 <div class="text-3xl font-extrabold text-slate-900">{{ $stats['patients'] }}</div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                 <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4 shadow-inner">
                     <i class="fa-solid fa-file-medical"></i>
                 </div>
-                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Med Records</div>
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">Rekam Medis</div>
                 <div class="text-3xl font-extrabold text-slate-900">{{ $stats['medical_records'] }}</div>
             </div>
         </div>
@@ -82,9 +82,9 @@
     <div class="glass-card rounded-2xl overflow-hidden shadow-sm mb-8">
         <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-white/50">
             <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> Recent Activities
+                <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> Aktivitas Terbaru
             </h3>
-            <a href="{{ route('admin.activity-logs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">View All &rarr;</a>
+            <a href="{{ route('admin.activity-logs.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">Lihat Semua &rarr;</a>
         </div>
         <div class="divide-y divide-slate-100">
             @forelse($recentActivities as $log)
@@ -105,7 +105,7 @@
                     <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-2xl text-slate-400 mb-4 shadow-inner">
                         <i class="fa-solid fa-inbox"></i>
                     </div>
-                    <p class="font-medium text-slate-600">No recent activities found.</p>
+                    <p class="font-medium text-slate-600">Tidak ada aktivitas terbaru.</p>
                 </div>
             @endforelse
         </div>

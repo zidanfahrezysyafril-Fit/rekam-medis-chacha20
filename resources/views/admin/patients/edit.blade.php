@@ -50,8 +50,8 @@
                         <div>
                             <label for="gender" class="block text-sm font-bold text-slate-700 mb-1">Jenis Kelamin</label>
                             <select name="gender" id="gender" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
-                                <option value="L" {{ old('gender', $patient->gender) == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                                <option value="P" {{ old('gender', $patient->gender) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                                <option value="Male" {{ old('gender', $patient->gender) == 'Male' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Female" {{ old('gender', $patient->gender) == 'Female' ? 'selected' : '' }}>Perempuan</option>
                             </select>
                             @error('gender')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

@@ -43,7 +43,7 @@
                                     <a href="{{ route('patient.medical-records.show', $record) }}" class="text-cyan-600 hover:text-cyan-900 bg-cyan-50 hover:bg-cyan-100 p-2 rounded-lg transition-colors" title="Lihat & Dekripsi">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('patient.medical-records.export-pdf', $record) }}" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Download PDF">
+                                    <a href="{{ route('patient.medical-records.pdf', $record) }}" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Download PDF">
                                         <i class="fa-solid fa-file-pdf"></i>
                                     </a>
                                 </div>

@@ -12,28 +12,29 @@ class EncryptionService
      */
     public function encrypt(string $data): array
     {
-        // Generate a unique nonce
-        $nonce = random_bytes(SODIUM_CRYPTO_STREAM_XCHACHA20_NONCEBYTES);
+        // Generate a 12-byte nonce for OpenSSL ChaCha20-Poly1305
+        $nonce = random_bytes(12);
         
-        // Ensure the key is exactly the length required by xchacha20
-        // We'll use the APP_KEY or generate a specific one. Let's use a hashed version of APP_KEY to guarantee 32 bytes.
         $key = config('app.key');
         if (str_starts_with($key, 'base64:')) {
             $key = base64_decode(substr($key, 7));
         }
         $key = hash('sha256', $key, true);
 
-        // Encrypt the data
-        $ciphertext = sodium_crypto_stream_xchacha20_xor($data, $nonce, $key);
+        $tag = '';
+        $ciphertext = openssl_encrypt($data, 'chacha20-poly1305', $key, OPENSSL_RAW_DATA, $nonce, $tag);
+
+        // Combine ciphertext and auth tag so it can be returned as a single string
+        $combinedCiphertext = $ciphertext . $tag;
 
         return [
-            'ciphertext' => base64_encode($ciphertext),
+            'ciphertext' => base64_encode($combinedCiphertext),
             'nonce' => base64_encode($nonce),
         ];
     }
 
     /**
-     * Decrypt a string using ChaCha20 via Libsodium.
+     * Decrypt a string using ChaCha20-Poly1305 via OpenSSL.
      *
      * @param string $ciphertextBase64
      * @param string $nonceBase64
@@ -41,7 +42,7 @@ class EncryptionService
      */
     public function decrypt(string $ciphertextBase64, string $nonceBase64): string
     {
-        $ciphertext = base64_decode($ciphertextBase64);
+        $combinedCiphertext = base64_decode($ciphertextBase64);
         $nonce = base64_decode($nonceBase64);
 
         $key = config('app.key');
@@ -50,8 +51,12 @@ class EncryptionService
         }
         $key = hash('sha256', $key, true);
 
-        $decrypted = sodium_crypto_stream_xchacha20_xor($ciphertext, $nonce, $key);
+        // The auth tag in Poly1305 is always 16 bytes long
+        $tag = substr($combinedCiphertext, -16);
+        $ciphertext = substr($combinedCiphertext, 0, -16);
 
-        return $decrypted;
+        $decrypted = openssl_decrypt($ciphertext, 'chacha20-poly1305', $key, OPENSSL_RAW_DATA, $nonce, $tag);
+
+        return $decrypted !== false ? $decrypted : '';
     }
 }

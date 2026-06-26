@@ -4,18 +4,78 @@
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white shadow-lg">
                 <i class="fa-solid fa-house-medical-flag"></i>
             </div>
-            Patient Dashboard
+            Dasbor Pasien
         </div>
     </x-slot>
 
     @if(!$patient)
-        <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 text-white shadow-lg mb-8 flex items-start gap-4">
-            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-2xl shrink-0 backdrop-blur-md border border-white/30">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+        <div class="glass-card rounded-2xl overflow-hidden shadow-sm mb-8">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-5 border-b border-orange-400 text-white flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl shrink-0 backdrop-blur-md border border-white/30">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Lengkapi Profil Anda</h3>
+                    <p class="text-orange-50 text-sm">Silakan lengkapi data demografi Anda di bawah ini agar dapat terhubung dengan rekam medis di sistem kami.</p>
+                </div>
             </div>
-            <div>
-                <h3 class="text-xl font-bold mb-1">Profile Not Linked</h3>
-                <p class="text-orange-50 font-medium">Your account is not yet fully linked to a patient record in the system. Please ensure your registered email matches your NIK or your name exactly matches the full name in the clinic's database.</p>
+            <div class="p-6 bg-white">
+                <form action="{{ route('patient.profile.store') }}" method="POST">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="nik" class="block text-sm font-bold text-slate-700 mb-1">NIK (Nomor Induk Kependudukan)</label>
+                            <input type="text" name="nik" id="nik" value="{{ old('nik') }}" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required placeholder="16 digit NIK">
+                            @error('nik') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="full_name" class="block text-sm font-bold text-slate-700 mb-1">Nama Lengkap</label>
+                            <input type="text" name="full_name" id="full_name" value="{{ old('full_name', auth()->user()->name) }}" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                            <p class="mt-1 text-xs text-slate-500">Nama akun login Anda akan diperbarui mengikuti nama ini.</p>
+                            @error('full_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="date_of_birth" class="block text-sm font-bold text-slate-700 mb-1">Tanggal Lahir</label>
+                            <input type="date" name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth') }}" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                            @error('date_of_birth') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="gender" class="block text-sm font-bold text-slate-700 mb-1">Jenis Kelamin</label>
+                            <select name="gender" id="gender" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                                <option value="">Pilih Jenis Kelamin...</option>
+                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                            @error('gender') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="blood_type" class="block text-sm font-bold text-slate-700 mb-1">Golongan Darah</label>
+                            <select name="blood_type" id="blood_type" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
+                                <option value="">Pilih Golongan Darah (Opsional)</option>
+                                <option value="A" {{ old('blood_type') == 'A' ? 'selected' : '' }}>A</option>
+                                <option value="B" {{ old('blood_type') == 'B' ? 'selected' : '' }}>B</option>
+                                <option value="AB" {{ old('blood_type') == 'AB' ? 'selected' : '' }}>AB</option>
+                                <option value="O" {{ old('blood_type') == 'O' ? 'selected' : '' }}>O</option>
+                            </select>
+                            @error('blood_type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="phone_number" class="block text-sm font-bold text-slate-700 mb-1">Nomor Telepon/HP</label>
+                            <input type="text" name="phone_number" id="phone_number" value="{{ old('phone_number') }}" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                            @error('phone_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="address" class="block text-sm font-bold text-slate-700 mb-1">Alamat Lengkap</label>
+                        <textarea name="address" id="address" rows="3" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>{{ old('address') }}</textarea>
+                        @error('address') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="flex justify-end pt-4 border-t border-slate-100">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-500/30 transition-all hover:-translate-y-0.5">
+                            Simpan Profil
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     @else
@@ -28,8 +88,8 @@
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($patient->full_name) }}&background=0D8ABC&color=fff&size=150" alt="{{ $patient->full_name }}" class="w-full h-full rounded-full object-cover">
                 </div>
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Hello, {{ $patient->full_name }}!</h2>
-                    <p class="text-cyan-100">Welcome to your secure health portal. Here you can securely view your medical records and examination history.</p>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Halo, {{ $patient->full_name }}!</h2>
+                    <p class="text-cyan-100">Selamat datang di portal kesehatan aman Anda. Di sini Anda dapat melihat rekam medis dan riwayat pemeriksaan Anda secara aman.</p>
                 </div>
             </div>
         </div>
@@ -40,30 +100,30 @@
                 <div class="glass-card rounded-2xl overflow-hidden h-full">
                     <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-id-card text-blue-500"></i> Demographics
+                            <i class="fa-solid fa-id-card text-blue-500"></i> Demografi
                         </h3>
                     </div>
                     <div class="p-6 space-y-6">
                         <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Full Name</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nama Lengkap</p>
                             <p class="text-base font-bold text-slate-900 flex items-center gap-2">
                                 {{ $patient->full_name }}
-                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full uppercase border border-green-200"><i class="fa-solid fa-check mr-1"></i>Verified</span>
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full uppercase border border-green-200"><i class="fa-solid fa-check mr-1"></i>Terverifikasi</span>
                             </p>
                         </div>
                         
                         <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">NIK (Identity Number)</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">NIK (Nomor Induk Kependudukan)</p>
                             <p class="text-base font-medium text-slate-700 font-mono">{{ $patient->nik }}</p>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Date of Birth</p>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tanggal Lahir</p>
                                 <p class="text-base font-medium text-slate-700">{{ \Carbon\Carbon::parse($patient->date_of_birth)->format('d M Y') }}</p>
                             </div>
                             <div>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Blood Type</p>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Golongan Darah</p>
                                 <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 font-bold border border-red-200">
                                     {{ $patient->blood_type ?? '-' }}
                                 </div>
@@ -73,7 +133,7 @@
                         <div class="pt-4 mt-4 border-t border-slate-100">
                             <div class="flex items-center gap-3 text-sm text-slate-500 font-medium bg-slate-50 p-3 rounded-xl border border-slate-100">
                                 <i class="fa-solid fa-shield-check text-green-500 text-lg"></i>
-                                <span>Your data is protected with ChaCha20 encryption.</span>
+                                <span>Data Anda dilindungi dengan enkripsi ChaCha20.</span>
                             </div>
                         </div>
                     </div>
@@ -85,9 +145,9 @@
                 <div class="glass-card rounded-2xl overflow-hidden h-full flex flex-col">
                     <div class="bg-white px-6 py-5 border-b border-slate-100 flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-notes-medical text-cyan-500"></i> Recent Visits
+                            <i class="fa-solid fa-notes-medical text-cyan-500"></i> Kunjungan Terbaru
                         </h3>
-                        <a href="{{ route('patient.medical-records.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full border border-blue-100">View History</a>
+                        <a href="{{ route('patient.medical-records.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full border border-blue-100">Lihat Riwayat</a>
                     </div>
                     
                     <div class="flex-1 p-6">
@@ -100,7 +160,7 @@
                                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 border-b border-slate-100 pb-4">
                                                 <div>
                                                     <span class="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-md mb-2 border border-slate-200">#{{ $record->medical_record_number }}</span>
-                                                    <h4 class="font-bold text-slate-900 text-lg">Consultation</h4>
+                                                    <h4 class="font-bold text-slate-900 text-lg">Konsultasi</h4>
                                                 </div>
                                                 <div class="text-left sm:text-right">
                                                     <p class="text-sm font-bold text-slate-800">{{ \Carbon\Carbon::parse($record->examination_date)->format('d F Y') }}</p>
@@ -110,10 +170,10 @@
                                             
                                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                                 <div class="flex items-center gap-2 text-sm text-green-700 font-semibold bg-green-50 px-3 py-1.5 rounded-lg border border-green-200 w-fit">
-                                                    <i class="fa-solid fa-lock text-green-500"></i> Encrypted Record
+                                                    <i class="fa-solid fa-lock text-green-500"></i> Rekam Medis Terenkripsi
                                                 </div>
                                                 <a href="{{ route('patient.medical-records.show', $record->id) }}" class="inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors shadow-sm">
-                                                    View Details <i class="fa-solid fa-arrow-right"></i>
+                                                    Lihat Detail <i class="fa-solid fa-arrow-right"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -125,8 +185,8 @@
                                 <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-3xl text-slate-300 mb-4 border border-slate-100 shadow-inner">
                                     <i class="fa-solid fa-folder-open"></i>
                                 </div>
-                                <h4 class="text-lg font-bold text-slate-700 mb-1">No Records Found</h4>
-                                <p class="text-sm text-slate-500 max-w-sm">You don't have any medical records in the system yet. Once you visit the clinic, your records will appear here securely.</p>
+                                <h4 class="text-lg font-bold text-slate-700 mb-1">Tidak Ada Rekam Medis</h4>
+                                <p class="text-sm text-slate-500 max-w-sm">Anda belum memiliki rekam medis di sistem. Setelah Anda mengunjungi klinik, rekam medis Anda akan muncul di sini secara aman.</p>
                             </div>
                         @endif
                     </div>

@@ -70,7 +70,7 @@
                                     <a href="{{ route('doctor.medical-records.edit', $record) }}" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-lg transition-colors" title="Edit Data">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a href="{{ route('doctor.medical-records.export-pdf', $record) }}" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Download PDF">
+                                    <a href="{{ route('doctor.medical-records.pdf', $record) }}" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Download PDF">
                                         <i class="fa-solid fa-file-pdf"></i>
                                     </a>
                                 </div>

@@ -4,7 +4,7 @@
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg">
                 <i class="fa-solid fa-stethoscope"></i>
             </div>
-            Doctor Dashboard
+            Dasbor Dokter
         </div>
     </x-slot>
 
@@ -14,12 +14,12 @@
         
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-2">Hello, Dr. {{ Auth::user()->name }}! 👋</h2>
-                <p class="text-blue-100 max-w-xl">Welcome to your secure medical workspace. You can manage patient records, add new diagnoses, and review histories securely using ChaCha20 encryption.</p>
+                <h2 class="text-2xl md:text-3xl font-bold mb-2">Halo, dr. {{ Auth::user()->name }}! 👋</h2>
+                <p class="text-blue-100 max-w-xl">Selamat datang di ruang kerja medis aman Anda. Anda dapat mengelola rekam medis pasien, menambahkan diagnosis baru, dan meninjau riwayat secara aman menggunakan enkripsi ChaCha20.</p>
             </div>
             <div class="shrink-0 flex gap-3">
                 <a href="{{ route('doctor.medical-records.create') }}" class="px-6 py-3 bg-white text-indigo-600 font-bold rounded-xl shadow-lg hover:bg-slate-50 transition-all hover:-translate-y-1 flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> New Record
+                    <i class="fa-solid fa-plus"></i> Rekam Medis Baru
                 </a>
             </div>
         </div>
@@ -36,7 +36,7 @@
                         <i class="fa-solid fa-users-medical"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-1">Total Patients</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-1">Total Pasien</div>
                         <div class="text-4xl font-extrabold text-slate-900">{{ $stats['total_patients'] }}</div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         <i class="fa-solid fa-notes-medical"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-1">My Records Created</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-1">Rekam Medis Dibuat</div>
                         <div class="text-4xl font-extrabold text-slate-900">{{ $stats['my_records'] }}</div>
                     </div>
                 </div>
@@ -63,13 +63,13 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-lg mb-2 flex items-center gap-2">
-                            End-to-End Encryption Active
+                            Enkripsi End-to-End Aktif
                             <span class="flex h-2.5 w-2.5 relative">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                             </span>
                         </h4>
-                        <p class="text-slate-300 text-sm leading-relaxed">All sensitive patient data (complaints, diagnoses, actions) you enter is automatically encrypted using the ChaCha20 algorithm before being stored in the database. Only authorized personnel can decrypt and view this data.</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">Seluruh data pasien sensitif (keluhan, diagnosis, tindakan) yang Anda masukkan secara otomatis dienkripsi menggunakan algoritme ChaCha20 sebelum disimpan di database. Hanya personel berwenang yang dapat mendekripsi dan melihat data ini.</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
         <!-- Quick Actions Sidebar -->
         <div class="glass-card rounded-2xl p-6 h-fit">
             <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3 flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-amber-500"></i> Quick Actions
+                <i class="fa-solid fa-bolt text-amber-500"></i> Aksi Cepat
             </h3>
             
             <div class="space-y-3">
@@ -88,7 +88,7 @@
                             <div class="w-10 h-10 rounded-full bg-white text-blue-600 group-hover:text-blue-600 flex items-center justify-center font-bold shadow-sm">
                                 <i class="fa-solid fa-file-circle-plus"></i>
                             </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">Create Record</span>
+                            <span class="font-bold text-slate-700 group-hover:text-white">Buat Rekam Medis</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
                     </div>
@@ -100,7 +100,7 @@
                             <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
                                 <i class="fa-solid fa-address-book"></i>
                             </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">Patient Directory</span>
+                            <span class="font-bold text-slate-700 group-hover:text-white">Daftar Pasien</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
                     </div>
@@ -112,7 +112,7 @@
                             <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
                                 <i class="fa-solid fa-laptop-medical"></i>
                             </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">View All Records</span>
+                            <span class="font-bold text-slate-700 group-hover:text-white">Lihat Semua Rekam Medis</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
                     </div>

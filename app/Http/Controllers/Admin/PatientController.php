@@ -39,7 +39,7 @@ class PatientController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'date_of_birth' => 'required|date',
-            'gender' => ['required', Rule::in(['L', 'P'])],
+            'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => 'required|string',
             'phone_number' => 'required|string|max:20',
             'blood_type' => 'nullable|string|max:3',
@@ -71,6 +71,12 @@ class PatientController extends Controller
         return redirect()->route('admin.patients.index')->with('success', 'Data Pasien berhasil ditambahkan.');
     }
 
+    public function show(Patient $patient)
+    {
+        // Not used, redirect to index
+        return redirect()->route('admin.patients.index');
+    }
+
     public function edit(Patient $patient)
     {
         return view('admin.patients.edit', compact('patient'));
@@ -82,7 +88,7 @@ class PatientController extends Controller
             'nik' => ['required', 'string', 'max:20', Rule::unique('patients')->ignore($patient->id)],
             'full_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'gender' => ['required', Rule::in(['L', 'P'])],
+            'gender' => ['required', Rule::in(['Male', 'Female'])],
             'address' => 'required|string',
             'phone_number' => 'required|string|max:20',
             'blood_type' => 'nullable|string|max:3',

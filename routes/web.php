@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     // Patient Routes
     Route::middleware('role:patient')->prefix('patient')->name('patient.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Patient\DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/dashboard/profile', [\App\Http\Controllers\Patient\DashboardController::class, 'storeProfile'])->name('profile.store');
         Route::get('medical-records', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'index'])->name('medical-records.index');
         Route::get('medical-records/{medical_record}', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'show'])->name('medical-records.show');
         Route::get('medical-records/{medical_record}/pdf', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'exportPdf'])->name('medical-records.pdf');

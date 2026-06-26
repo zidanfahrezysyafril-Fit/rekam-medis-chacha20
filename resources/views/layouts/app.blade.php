@@ -41,7 +41,7 @@
             }
         </style>
     </head>
-    <body class="antialiased bg-slate-50 text-slate-800 flex h-screen overflow-hidden selection:bg-blue-500 selection:text-white">
+    <body class="antialiased bg-slate-50 text-slate-800 flex h-[100dvh] overflow-hidden selection:bg-blue-500 selection:text-white">
 
         <!-- Sidebar -->
         <aside class="w-72 sidebar-gradient text-slate-300 flex flex-col hidden md:flex shadow-2xl z-20 relative">
@@ -80,12 +80,12 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden relative">
+        <div class="flex-1 flex flex-col min-h-0 overflow-hidden relative">
             <!-- Decorative background blob -->
             <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[500px] h-[500px] bg-blue-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
             <!-- Topbar -->
-            <header class="h-20 glass-header flex items-center justify-between px-8 z-10 sticky top-0">
+            <header class="h-14 shrink-0 glass-header flex items-center justify-between px-6 lg:px-8 z-10 sticky top-0 border-b border-slate-200/70 shadow-sm">
                 <div class="flex items-center">
                     <!-- Mobile Menu Button -->
                     <button class="md:hidden text-slate-500 hover:text-slate-800 focus:outline-none transition-colors">
@@ -94,32 +94,33 @@
                         </svg>
                     </button>
                     @isset($header)
-                        <h2 class="text-2xl font-bold text-slate-800 tracking-tight ml-4 md:ml-0">
+                        <h2 class="text-lg lg:text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 tracking-tight ml-4 md:ml-0">
                             {{ $header }}
                         </h2>
                     @endisset
                 </div>
                 
                 <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5 text-blue-500"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        {{ now()->format('D, d M Y') }}
+                    <div class="hidden sm:flex items-center text-[11px] font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+                        <i class="fa-solid fa-calendar-day text-blue-500 mr-2"></i>
+                        {{ now()->format('d M Y') }}
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="flex items-center gap-2 text-sm text-slate-600 hover:text-red-600 font-semibold transition-colors bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 px-4 py-2 rounded-lg shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
-                            Log Out
+                        <button type="submit" class="flex items-center gap-1.5 text-[11px] text-slate-600 hover:text-red-600 font-bold transition-all bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 px-3 py-1 rounded-full shadow-sm hover:shadow-md">
+                            <i class="fa-solid fa-power-off"></i>
+                            Keluar
                         </button>
                     </form>
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto p-6 lg:p-8 z-10">
-                <div class="max-w-7xl mx-auto">
+            <main class="flex-1 min-h-0 overflow-x-hidden overflow-y-auto z-10 flex flex-col">
+                <div class="w-full max-w-7xl mx-auto px-6 py-2 flex-grow shrink-0">
                     {{ $slot }}
                 </div>
+
             </main>
         </div>
     </body>

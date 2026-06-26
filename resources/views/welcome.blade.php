@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -22,7 +20,6 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: #f7fcff;
             color: #0f172a;
         }
 
@@ -126,7 +123,8 @@
     </style>
 </head>
 
-<body>
+<body class="flex flex-col min-h-screen bg-slate-950 text-slate-900">
+    <main class="flex-grow bg-[#f7fcff]">
     <!-- NAVBAR -->
     <nav class="fixed top-0 left-0 w-full z-50 glass">
         <div class="max-w-7xl mx-auto px-6 lg:px-10">
@@ -227,8 +225,6 @@
         from-white/95
         via-white/45
         to-white/15">
-        </div>
-        </div>
         </div>
         <!-- Content -->
         <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 w-full">
@@ -490,9 +486,7 @@
     </section>
 
     <!-- FEATURES -->
-    <section id="fitur" class="py-24 relative">
-        <!-- FEATURES -->
-        <section id="fitur" class="py-28 bg-gradient-to-b from-cyan-50 to-white">
+    <section id="fitur" class="py-28 bg-gradient-to-b from-cyan-50 to-white">
             <div class="max-w-7xl mx-auto px-6 lg:px-10">
                 <div class="text-center mb-20">
                     <span class="text-cyan-600 font-bold uppercase tracking-widest">
@@ -750,29 +744,62 @@
                 </a>
             </div>
         </section>
-        <!-- FOOTER -->
-        <footer class="bg-slate-950 text-slate-400 py-12">
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        </main>
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 relative overflow-hidden pt-20 pb-10 border-t border-slate-800">
+            <!-- Background Glow -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-cyan-900/30 to-transparent blur-3xl rounded-full pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                     <div>
-                        <h3 class="text-white text-2xl font-extrabold">
-                            MedSecure Neo
-                        </h3>
-                        <p class="mt-2">
-                            Secure Medical Record System
-                            with ChaCha20 Encryption
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                                <i class="fa-solid fa-shield-heart text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white text-3xl font-extrabold tracking-tight">
+                                    MedSecure Neo
+                                </h3>
+                                <p class="text-xs text-cyan-400 font-bold tracking-widest uppercase mt-1">
+                                    Medical Security Platform
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 leading-relaxed max-w-md">
+                            Sistem Rekam Medis terpadu yang memadukan keandalan teknologi web modern dengan kekuatan algoritma enkripsi ChaCha20-Poly1305 untuk perlindungan data kesehatan.
                         </p>
                     </div>
-                    <div class="text-center md:text-right">
-                        <p>
-                            Politeknik Negeri Bengkalis
-                        </p>
-                        <p>
-                            Project Kriptografi Modern
-                        </p>
-                        <p>
-                            © 2026 MedSecure Neo
-                        </p>
+                    
+                    <div class="flex flex-col md:items-end gap-4">
+                        <div class="bg-slate-900/80 backdrop-blur-md border border-slate-800 p-6 rounded-3xl max-w-sm text-left md:text-right shadow-2xl">
+                            <p class="text-cyan-500 font-extrabold mb-3 uppercase tracking-widest text-xs">Dikembangkan Oleh</p>
+                            <h4 class="text-white font-bold text-xl mb-1">Politeknik Negeri Bengkalis</h4>
+                            <p class="text-slate-400 text-sm font-medium">Project Kriptografi Modern</p>
+                        </div>
+                        <div class="flex items-center gap-3 mt-2">
+                            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                <span class="relative flex h-2 w-2">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                Sistem Aktif & Terenkripsi
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-slate-800/80">
+                    <p class="text-slate-500 text-sm font-medium">
+                        &copy; {{ date('Y') }} MedSecure Neo. Hak Cipta Dilindungi Undang-Undang.
+                    </p>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-900 transition-all cursor-pointer hover:-translate-y-1">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-900 transition-all cursor-pointer hover:-translate-y-1">
+                            <i class="fa-solid fa-shield"></i>
+                        </div>
                     </div>
                 </div>
             </div>
