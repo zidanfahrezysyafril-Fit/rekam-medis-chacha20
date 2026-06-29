@@ -39,6 +39,38 @@
                 transform: translateY(-2px);
                 border-color: rgba(14, 165, 233, 0.2);
             }
+
+            /* DNA Sidebar Animation */
+            .dna-mini-rung {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 32px;
+                height: 8px;
+                transform-style: preserve-3d;
+                animation: dnaMiniRotate 4s linear infinite;
+                animation-delay: var(--delay);
+                position: absolute;
+                top: var(--y);
+                left: calc(50% - 16px);
+            }
+            .dna-mini-node {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: currentColor;
+                box-shadow: 0 0 6px currentColor;
+            }
+            .dna-mini-line {
+                flex-grow: 1;
+                height: 1px;
+                margin: 0 2px;
+                background-image: repeating-linear-gradient(90deg, transparent, transparent 1px, currentColor 1px, currentColor 2px);
+            }
+            @keyframes dnaMiniRotate {
+                0% { transform: rotateY(0deg); }
+                100% { transform: rotateY(360deg); }
+            }
         </style>
     </head>
     <body class="antialiased bg-slate-50 text-slate-800 flex h-[100dvh] overflow-hidden selection:bg-blue-500 selection:text-white">
@@ -70,11 +102,56 @@
                 </div>
             </div>
             
-            <div class="flex-1 overflow-y-auto py-6 px-4 relative z-10 custom-scrollbar">
-                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 px-4">Menu</div>
-                <nav class="space-y-1.5">
-                    @include('layouts.sidebar-links')
-                </nav>
+            <div class="flex-1 overflow-y-auto py-6 px-4 relative z-10 custom-scrollbar flex flex-col justify-between">
+                <div>
+                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 px-4">Menu</div>
+                    <nav class="space-y-1.5">
+                        @include('layouts.sidebar-links')
+                    </nav>
+                </div>
+
+                <!-- Status Card with Animated DNA -->
+                <div class="mt-8 mx-2 p-4 rounded-2xl bg-slate-800/40 border border-slate-700/30 relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center gap-4 relative z-10">
+                        <!-- Mini Rotating DNA Helix -->
+                        <div class="w-8 h-14 flex flex-col justify-between items-center relative shrink-0" style="perspective: 1000px;">
+                            <div class="dna-mini-rung text-cyan-400" style="--y: 0%; --delay: 0s;">
+                                <div class="dna-mini-node"></div>
+                                <div class="dna-mini-line"></div>
+                                <div class="dna-mini-node"></div>
+                            </div>
+                            <div class="dna-mini-rung text-teal-400" style="--y: 25%; --delay: -0.5s;">
+                                <div class="dna-mini-node"></div>
+                                <div class="dna-mini-line"></div>
+                                <div class="dna-mini-node"></div>
+                            </div>
+                            <div class="dna-mini-rung text-cyan-400" style="--y: 50%; --delay: -1.0s;">
+                                <div class="dna-mini-node"></div>
+                                <div class="dna-mini-line"></div>
+                                <div class="dna-mini-node"></div>
+                            </div>
+                            <div class="dna-mini-rung text-teal-400" style="--y: 75%; --delay: -1.5s;">
+                                <div class="dna-mini-node"></div>
+                                <div class="dna-mini-line"></div>
+                                <div class="dna-mini-node"></div>
+                            </div>
+                            <div class="dna-mini-rung text-cyan-400" style="--y: 100%; --delay: -2.0s;">
+                                <div class="dna-mini-node"></div>
+                                <div class="dna-mini-line"></div>
+                                <div class="dna-mini-node"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Security Engine</div>
+                            <div class="text-xs font-bold text-slate-300 mt-0.5">ChaCha20 Active</div>
+                            <div class="text-[9px] text-cyan-400 font-semibold mt-0.5 flex items-center gap-1">
+                                <span class="w-1 h-1 rounded-full bg-cyan-400 inline-block animate-ping"></span>
+                                Encrypted Connection
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="p-6 border-t border-slate-700/50 bg-slate-900/50 relative z-10">

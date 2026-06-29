@@ -96,6 +96,7 @@
                 width: 10px;
                 height: 10px;
                 border-radius: 50%;
+                background-color: currentColor;
                 box-shadow: 0 0 8px currentColor;
             }
             .dna-line {
@@ -112,10 +113,103 @@
                     transform: rotateY(360deg);
                 }
             }
+
+            /* Falling Capsules Background */
+            @keyframes fall {
+                0% { transform: translateY(-120vh) rotate(0deg); opacity: 0; }
+                10% { opacity: 0.35; }
+                90% { opacity: 0.35; }
+                100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+            }
+            .capsule-pill {
+                position: absolute;
+                width: 12px;
+                height: 32px;
+                border-radius: 9999px;
+                border: 1px solid rgba(6, 182, 212, 0.25);
+                animation: fall 12s linear infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+            .capsule-pill::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50%;
+                border-top-left-radius: 9999px;
+                border-top-right-radius: 9999px;
+                background-color: rgba(6, 182, 212, 0.45);
+            }
+            .capsule-pill::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50%;
+                border-bottom-left-radius: 9999px;
+                border-bottom-right-radius: 9999px;
+                background-color: rgba(255, 255, 255, 0.65);
+            }
+
+            /* Hologram 3D effect for doctor image (Smooth 360deg rotation + float) */
+            @keyframes hologramPulse {
+                0% {
+                    transform: translateY(0px) rotateX(12deg) rotateY(0deg);
+                    filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.45)) saturate(1.1);
+                }
+                50% {
+                    transform: translateY(-16px) rotateX(12deg) rotateY(180deg);
+                    filter: drop-shadow(0 0 25px rgba(20, 184, 166, 0.65)) saturate(1.35);
+                }
+                100% {
+                    transform: translateY(0px) rotateX(12deg) rotateY(360deg);
+                    filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.45)) saturate(1.1);
+                }
+            }
+            .animate-hologram {
+                animation: hologramPulse 10s linear infinite;
+                transform-style: preserve-3d;
+                perspective: 1000px;
+            }
         </style>
     </head>
     <body class="antialiased bg-slate-50 text-slate-800 selection:bg-cyan-500 selection:text-white relative overflow-x-hidden min-h-screen">
         
+        <!-- Falling Capsules Background -->
+        <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            <div class="capsule-pill" style="left: 3%; animation-delay: 0s; animation-duration: 10s;"></div>
+            <div class="capsule-pill" style="left: 8%; animation-delay: -3s; animation-duration: 14s;"></div>
+            <div class="capsule-pill" style="left: 12%; animation-delay: -7s; animation-duration: 12s;"></div>
+            <div class="capsule-pill" style="left: 18%; animation-delay: -1s; animation-duration: 16s;"></div>
+            <div class="capsule-pill" style="left: 23%; animation-delay: -5s; animation-duration: 11s;"></div>
+            <div class="capsule-pill" style="left: 27%; animation-delay: -10s; animation-duration: 15s;"></div>
+            <div class="capsule-pill" style="left: 32%; animation-delay: -2s; animation-duration: 13s;"></div>
+            <div class="capsule-pill" style="left: 38%; animation-delay: -8s; animation-duration: 17s;"></div>
+            <div class="capsule-pill" style="left: 43%; animation-delay: -4s; animation-duration: 12s;"></div>
+            <div class="capsule-pill" style="left: 48%; animation-delay: -12s; animation-duration: 14s;"></div>
+            <div class="capsule-pill" style="left: 53%; animation-delay: -6s; animation-duration: 16s;"></div>
+            <div class="capsule-pill" style="left: 58%; animation-delay: -15s; animation-duration: 11s;"></div>
+            <div class="capsule-pill" style="left: 63%; animation-delay: -2s; animation-duration: 15s;"></div>
+            <div class="capsule-pill" style="left: 68%; animation-delay: -9s; animation-duration: 13s;"></div>
+            <div class="capsule-pill" style="left: 73%; animation-delay: -5s; animation-duration: 17s;"></div>
+            <div class="capsule-pill" style="left: 77%; animation-delay: -11s; animation-duration: 12s;"></div>
+            <div class="capsule-pill" style="left: 82%; animation-delay: -3s; animation-duration: 14s;"></div>
+            <div class="capsule-pill" style="left: 87%; animation-delay: -8s; animation-duration: 16s;"></div>
+            <div class="capsule-pill" style="left: 92%; animation-delay: -13s; animation-duration: 11s;"></div>
+            <div class="capsule-pill" style="left: 97%; animation-delay: -1s; animation-duration: 15s;"></div>
+            <div class="capsule-pill" style="left: 10%; animation-delay: -11s; animation-duration: 18s;"></div>
+            <div class="capsule-pill" style="left: 20%; animation-delay: -4s; animation-duration: 15s;"></div>
+            <div class="capsule-pill" style="left: 35%; animation-delay: -13s; animation-duration: 19s;"></div>
+            <div class="capsule-pill" style="left: 50%; animation-delay: -7s; animation-duration: 13s;"></div>
+            <div class="capsule-pill" style="left: 65%; animation-delay: -14s; animation-duration: 18s;"></div>
+            <div class="capsule-pill" style="left: 75%; animation-delay: -1s; animation-duration: 15s;"></div>
+            <div class="capsule-pill" style="left: 80%; animation-delay: -10s; animation-duration: 14s;"></div>
+            <div class="capsule-pill" style="left: 90%; animation-delay: -5s; animation-duration: 16s;"></div>
+        </div>
+
         <div class="min-h-screen lg:grid lg:grid-cols-12">
             
             <!-- LEFT PANEL: Welcoming Smiling Doctor Illustration, Academic Badge & Features (Desktop only) -->
@@ -159,7 +253,7 @@
                     <!-- Dynamic Medical Graphic Box -->
                     <div class="relative w-full max-w-sm mb-8 flex justify-center">
                         <div class="absolute inset-0 bg-gradient-to-tr from-cyan-400 to-teal-400 rounded-3xl blur-2xl opacity-15 -rotate-2 scale-95"></div>
-                        <div class="relative transition-all duration-500 hover:scale-[1.05] flex justify-center w-full">
+                        <div class="relative transition-all duration-500 flex justify-center w-full">
                             <img src="/images/medical_tech_heart.png" alt="Medical Technology Heart" class="w-full h-60 object-contain mix-blend-multiply animate-heart-beat" />
                         </div>
                     </div>
@@ -237,7 +331,7 @@
                 <div class="flex-grow flex items-center justify-center w-full py-4">
                     <div class="w-full max-w-md bg-white border border-slate-200/80 shadow-[0_20px_50px_rgba(15,23,42,0.06)] rounded-[2rem] p-8 md:p-10 relative overflow-hidden transition-all duration-300 hover:shadow-[0_20px_50px_rgba(6,182,212,0.08)] hover:border-cyan-200/50 backdrop-blur-md animate-slide-in">
                         <!-- DNA Spiral Animation Background -->
-                        <div class="absolute inset-0 opacity-[0.06] pointer-events-none z-0 overflow-hidden py-12 px-6">
+                        <div class="absolute inset-0 opacity-[0.18] pointer-events-none z-0 overflow-hidden py-12 px-6">
                             <div class="w-full h-full relative" style="perspective: 1000px;">
                                 <div class="dna-rung text-cyan-600" style="--y: 5%; --delay: 0s;">
                                     <div class="dna-node"></div>
