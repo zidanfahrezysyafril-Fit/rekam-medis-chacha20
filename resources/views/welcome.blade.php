@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MedSecure Neo | ChaCha20 Medical Security Platform</title>
+    <title>MedSecure | ChaCha20 Medical Security Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -665,10 +665,10 @@
                             About Project
                         </span>
                         <h2 class="text-4xl lg:text-5xl font-extrabold mt-4 mb-8">
-                            MedSecure Neo
+                            MedSecure
                         </h2>
                         <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                            MedSecure Neo merupakan sistem rekam medis
+                            MedSecure merupakan sistem rekam medis
                             digital yang dikembangkan sebagai implementasi
                             algoritma kriptografi modern ChaCha20 untuk
                             menjaga keamanan dan kerahasiaan data pasien.
@@ -759,7 +759,7 @@
                             </div>
                             <div>
                                 <h3 class="text-white text-3xl font-extrabold tracking-tight">
-                                    MedSecure Neo
+                                    MedSecure
                                 </h3>
                                 <p class="text-xs text-cyan-400 font-bold tracking-widest uppercase mt-1">
                                     Medical Security Platform
@@ -791,7 +791,7 @@
 
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-slate-800/80">
                     <p class="text-slate-500 text-sm font-medium">
-                        &copy; {{ date('Y') }} MedSecure Neo. Hak Cipta Dilindungi Undang-Undang.
+                        &copy; {{ date('Y') }} MedSecure. Hak Cipta Dilindungi Undang-Undang.
                     </p>
                     <div class="flex gap-4">
                         <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-900 transition-all cursor-pointer hover:-translate-y-1">

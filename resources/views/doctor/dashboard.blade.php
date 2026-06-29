@@ -2,23 +2,29 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg">
-                <i class="fa-solid fa-stethoscope"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 7c0-2-1-3-3-3M15 7c0-2 1-3 3-3" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v3m0 0a1 1 0 100-2 1 1 0 000 2z" />
+                </svg>
             </div>
             Dasbor Dokter
         </div>
     </x-slot>
 
     <!-- Welcome Banner -->
-    <div class="relative bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-8 mb-8 overflow-hidden text-white">
-        <div class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+    <div class="relative bg-gradient-to-r from-cyan-600 via-sky-600 to-teal-600 rounded-3xl shadow-xl p-8 mb-8 overflow-hidden text-white">
+        <!-- Glossy overlay -->
+        <span class="absolute inset-x-0 top-0 h-1/2 bg-white/10 blur-sm pointer-events-none"></span>
+        <div class="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4"></div>
         
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-                <h2 class="text-2xl md:text-3xl font-bold mb-2">Halo, dr. {{ Auth::user()->name }}! 👋</h2>
-                <p class="text-blue-100 max-w-xl">Selamat datang di ruang kerja medis aman Anda. Anda dapat mengelola rekam medis pasien, menambahkan diagnosis baru, dan meninjau riwayat secara aman menggunakan enkripsi ChaCha20.</p>
+                <h2 class="text-2xl md:text-3xl font-extrabold mb-2 tracking-tight">Halo, dr. {{ Auth::user()->name }}! 👋</h2>
+                <p class="text-cyan-50 text-sm font-medium max-w-xl leading-relaxed">Selamat datang di ruang kerja medis aman Anda. Anda dapat mengelola rekam medis pasien, menambahkan diagnosis baru, dan meninjau riwayat secara aman menggunakan enkripsi ChaCha20.</p>
             </div>
             <div class="shrink-0 flex gap-3">
-                <a href="{{ route('doctor.medical-records.create') }}" class="px-6 py-3 bg-white text-indigo-600 font-bold rounded-xl shadow-lg hover:bg-slate-50 transition-all hover:-translate-y-1 flex items-center gap-2">
+                <a href="{{ route('doctor.medical-records.create') }}" class="px-6 py-3 bg-white text-cyan-600 font-bold rounded-xl shadow-lg hover:bg-slate-50 transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
                     <i class="fa-solid fa-plus"></i> Rekam Medis Baru
                 </a>
             </div>

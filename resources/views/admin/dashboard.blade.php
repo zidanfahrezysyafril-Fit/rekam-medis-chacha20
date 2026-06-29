@@ -2,20 +2,21 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white shadow-lg">
-                <i class="fa-solid fa-chart-pie"></i>
+                <i class="fa-solid fa-shield-heart"></i>
             </div>
             Ringkasan Admin
         </div>
     </x-slot>
 
     <!-- Welcome Banner -->
-    <div class="relative bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl shadow-xl p-8 mb-8 overflow-hidden text-white border border-slate-700">
-        <div class="absolute right-0 top-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
-        <div class="absolute right-0 bottom-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl translate-y-1/4 translate-x-1/4"></div>
+    <div class="relative bg-gradient-to-r from-cyan-600 via-sky-600 to-teal-600 rounded-3xl shadow-xl p-8 mb-8 overflow-hidden text-white">
+        <!-- Glossy overlay -->
+        <span class="absolute inset-x-0 top-0 h-1/2 bg-white/10 blur-sm pointer-events-none"></span>
+        <div class="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4"></div>
         
         <div class="relative z-10">
-            <h2 class="text-2xl md:text-3xl font-bold mb-2">Selamat datang kembali, {{ Auth::user()->name }}! 👋</h2>
-            <p class="text-slate-300 max-w-2xl">Berikut adalah ringkasan sistem MedSecure hari ini. Pantau aktivitas pengguna, pendaftaran dokter, dan rekam medis pasien di satu tempat.</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold mb-2 tracking-tight">Selamat datang kembali, {{ Auth::user()->name }}! 👋</h2>
+            <p class="text-cyan-50 text-sm font-medium max-w-2xl leading-relaxed">Berikut adalah ringkasan sistem MedSecure hari ini. Pantau aktivitas pengguna, pendaftaran dokter, dan rekam medis pasien di satu tempat.</p>
         </div>
     </div>
 

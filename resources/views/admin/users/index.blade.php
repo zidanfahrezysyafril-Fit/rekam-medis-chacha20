@@ -84,7 +84,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-medium">
-                                {{ $user->created_at->format('d M Y') }}
+                                {{ $user->created_at ? $user->created_at->format('d M Y') : '-' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end gap-2">

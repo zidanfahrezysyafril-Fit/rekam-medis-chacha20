@@ -2,7 +2,11 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white shadow-lg">
-                <i class="fa-solid fa-house-medical-flag"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 14c1 1.5 3 2.5 4.5 1M21 14c-1 1.5-3 2.5-4.5 1" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v6M9 10h6" stroke-width="2.5" />
+                </svg>
             </div>
             Dasbor Pasien
         </div>
@@ -71,7 +75,7 @@
                         @error('address') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                     <div class="flex justify-end pt-4 border-t border-slate-100">
-                        <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-500/30 transition-all hover:-translate-y-0.5">
+                        <button type="submit" class="px-6 py-2 bg-gradient-to-r from-cyan-600 to-teal-600 hover:opacity-95 text-white font-bold rounded-xl shadow-md shadow-cyan-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                             Simpan Profil
                         </button>
                     </div>
@@ -80,16 +84,18 @@
         </div>
     @else
         <!-- Welcome Banner -->
-        <div class="relative bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl shadow-xl p-8 mb-8 overflow-hidden text-white">
-            <div class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div class="relative bg-gradient-to-r from-cyan-600 via-sky-600 to-teal-600 rounded-3xl shadow-xl p-8 mb-8 overflow-hidden text-white">
+            <!-- Glossy overlay -->
+            <span class="absolute inset-x-0 top-0 h-1/2 bg-white/10 blur-sm pointer-events-none"></span>
+            <div class="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4"></div>
             
             <div class="relative z-10 flex flex-col sm:flex-row items-center gap-6">
-                <div class="w-24 h-24 rounded-full bg-white p-1 shadow-inner shrink-0">
+                <div class="w-24 h-24 rounded-full bg-white p-1 shadow-lg shrink-0">
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($patient->full_name) }}&background=0D8ABC&color=fff&size=150" alt="{{ $patient->full_name }}" class="w-full h-full rounded-full object-cover">
                 </div>
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Halo, {{ $patient->full_name }}!</h2>
-                    <p class="text-cyan-100">Selamat datang di portal kesehatan aman Anda. Di sini Anda dapat melihat rekam medis dan riwayat pemeriksaan Anda secara aman.</p>
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-2 tracking-tight">Halo, {{ $patient->full_name }}! 👋</h2>
+                    <p class="text-cyan-50 text-sm font-medium max-w-2xl leading-relaxed">Selamat datang di portal kesehatan aman Anda. Di sini Anda dapat melihat rekam medis dan riwayat pemeriksaan Anda secara aman.</p>
                 </div>
             </div>
         </div>

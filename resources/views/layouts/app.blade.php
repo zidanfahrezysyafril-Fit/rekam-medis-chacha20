@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'SecureEMR') }}</title>
+        <title>{{ config('app.name', 'MedSecure') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,9 +50,23 @@
             <div class="h-20 flex items-center px-8 border-b border-slate-700/50 relative z-10">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+                        @if(Auth::user()->role === 'admin')
+                            <i class="fa-solid fa-shield-heart text-sm"></i>
+                        @elseif(Auth::user()->role === 'doctor')
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 7c0-2-1-3-3-3M15 7c0-2 1-3 3-3" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v3m0 0a1 1 0 100-2 1 1 0 000 2z" />
+                            </svg>
+                        @elseif(Auth::user()->role === 'patient')
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 14c1 1.5 3 2.5 4.5 1M21 14c-1 1.5-3 2.5-4.5 1" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v6M9 10h6" stroke-width="2.5" />
+                            </svg>
+                        @endif
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-white">SecureEMR</span>
+                    <span class="font-bold text-xl tracking-tight text-white">MedSecure</span>
                 </div>
             </div>
             
