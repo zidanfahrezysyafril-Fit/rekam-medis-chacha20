@@ -277,7 +277,7 @@
                         class="text-xl text-slate-600
                 leading-relaxed
                 max-w-xl
-                mb-10">
+                mb-4">
 
                         Sistem rekam medis digital generasi baru
                         yang menggabungkan keamanan kriptografi modern,
@@ -286,10 +286,10 @@
 
                     </p>
 
-                    <div class="flex flex-wrap gap-4">
+                    <div class="flex flex-wrap gap-8">
 
                         <a href="{{ route('login') }}"
-                            class="px-8 py-4 rounded-2xl
+                            class="px-9 py-4 rounded-2xl
                     bg-gradient-to-r
                     from-cyan-500
                     to-blue-600
@@ -304,7 +304,7 @@
                         </a>
 
                         <a href="#fitur"
-                            class="px-8 py-4 rounded-2xl
+                            class="px-9 py-4 rounded-2xl
                     bg-white/90
                     backdrop-blur-xl
                     border border-slate-200
@@ -773,8 +773,8 @@
                     
                     <div class="flex flex-col md:items-end gap-4">
                         <div class="bg-slate-900/80 backdrop-blur-md border border-slate-800 p-6 rounded-3xl max-w-sm text-left md:text-right shadow-2xl">
-                            <p class="text-cyan-500 font-extrabold mb-3 uppercase tracking-widest text-xs">Dikembangkan Oleh</p>
-                            <h4 class="text-white font-bold text-xl mb-1">Politeknik Negeri Bengkalis</h4>
+                            <p class="text-cyan-500 font-extrabold mb-3 uppercase tracking-widest text-xs"></p>
+                            <h4 class="text-white font-bold text-xl mb-1"></h4>
                             <p class="text-slate-400 text-sm font-medium">Project Kriptografi Modern</p>
                         </div>
                         <div class="flex items-center gap-3 mt-2">
