@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
+    use \App\Traits\Encryptable;
+
+    protected $encryptable = [
+        'address',
+        'phone_number',
+        'blood_type',
+        'date_of_birth',
+    ];
+
     protected $fillable = [
         'nik',
         'full_name',
@@ -14,6 +23,7 @@ class Patient extends Model
         'address',
         'phone_number',
         'blood_type',
+        'nonce',
     ];
 
     public function medicalRecords()

@@ -11,7 +11,11 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, \App\Traits\Encryptable;
+
+    protected $encryptable = [
+        'email',
+    ];
 
     const ROLE_ADMIN = 'admin';
     const ROLE_DOCTOR = 'doctor';
@@ -25,10 +29,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_hash',
         'password',
         'role',
         'otp_code',
         'otp_expires_at',
+        'nonce',
     ];
 
     public function activityLogs()

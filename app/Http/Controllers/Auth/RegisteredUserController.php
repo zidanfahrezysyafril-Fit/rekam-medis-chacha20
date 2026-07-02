@@ -26,7 +26,15 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'email' => [
+                'required', 'string', 'lowercase', 'email', 'max:255',
+                function ($attribute, $value, $fail) {
+                    $hash = hash_hmac('sha256', $value, config('app.key'));
+                    if (\App\Models\User::where('email_hash', $hash)->exists()) {
+                        $fail('The email has already been taken.');
+                    }
+                }
+            ],
             'no_hp' => ['nullable', 'string', 'max:20'],
             'role' => ['required', 'in:patient'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -34,9 +42,12 @@ class RegisteredUserController extends Controller
 
         $otp = (string) random_int(100000, 999999);
 
+        $emailHash = hash_hmac('sha256', $request->email, config('app.key'));
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'email_hash' => $emailHash,
             'role' => $request->role,
             'password' => Hash::make($request->password),
             'otp_code' => $otp,

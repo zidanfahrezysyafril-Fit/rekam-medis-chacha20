@@ -28,75 +28,26 @@ class DoctorController extends Controller
 
     public function create()
     {
-        return view('admin.doctors.create');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'doctor_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'sip_number' => 'required|string|max:50|unique:doctors',
-            'specialization' => 'required|string|max:100',
-            'phone_number' => 'required|string|max:20',
-        ]);
-
-        // Create User account for the doctor
-        $user = User::create([
-            'name' => $validated['doctor_name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => 'doctor',
-        ]);
-
-        // Create Doctor profile
-        Doctor::create([
-            'doctor_name' => $validated['doctor_name'],
-            'sip_number' => $validated['sip_number'],
-            'specialization' => $validated['specialization'],
-            'phone_number' => $validated['phone_number'],
-        ]);
-
-        \App\Services\ActivityLogger::log('Menambahkan dokter baru: ' . $validated['doctor_name']);
-
-        return redirect()->route('admin.doctors.index')->with('success', 'Data Dokter berhasil ditambahkan.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function edit(Doctor $doctor)
     {
-        // Try to find the associated user account (by name or email if possible, but schema doesn't link them directly by user_id)
-        // Since schema for doctors doesn't have user_id, we will just update the doctor info.
-        return view('admin.doctors.edit', compact('doctor'));
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function update(Request $request, Doctor $doctor)
     {
-        $validated = $request->validate([
-            'doctor_name' => 'required|string|max:255',
-            'sip_number' => ['required', 'string', 'max:50', Rule::unique('doctors')->ignore($doctor->id)],
-            'specialization' => 'required|string|max:100',
-            'phone_number' => 'required|string|max:20',
-        ]);
-
-        $doctor->update($validated);
-
-        \App\Services\ActivityLogger::log('Memperbarui data dokter: ' . $doctor->doctor_name);
-
-        return redirect()->route('admin.doctors.index')->with('success', 'Data Dokter berhasil diperbarui.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function destroy(Doctor $doctor)
     {
-        $name = $doctor->doctor_name;
-        
-        // Optionally delete the user account if name matches exactly
-        User::where('name', $name)->where('role', 'doctor')->delete();
-        
-        $doctor->delete();
-
-        \App\Services\ActivityLogger::log('Menghapus data dokter: ' . $name);
-
-        return redirect()->route('admin.doctors.index')->with('success', 'Data Dokter berhasil dihapus.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 }

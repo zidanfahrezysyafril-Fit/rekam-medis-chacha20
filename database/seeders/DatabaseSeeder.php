@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin System',
             'email' => 'admin@emr.com',
+            'email_hash' => hash_hmac('sha256', 'admin@emr.com', config('app.key')),
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $doctorUser = User::create([
             'name' => 'Dr. John Doe',
             'email' => 'doctor@emr.com',
+            'email_hash' => hash_hmac('sha256', 'doctor@emr.com', config('app.key')),
             'password' => bcrypt('password'),
             'role' => 'doctor',
         ]);
@@ -42,6 +44,7 @@ class DatabaseSeeder extends Seeder
         $patientUser = User::create([
             'name' => 'Jane Smith',
             'email' => 'patient@emr.com',
+            'email_hash' => hash_hmac('sha256', 'patient@emr.com', config('app.key')),
             'password' => bcrypt('password'),
             'role' => 'patient',
         ]);

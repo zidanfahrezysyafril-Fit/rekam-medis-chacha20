@@ -27,72 +27,26 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.create');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'role' => ['required', Rule::in(['admin', 'doctor', 'patient'])],
-        ]);
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
-        ]);
-
-        \App\Services\ActivityLogger::log('Menambahkan pengguna baru: ' . $user->email);
-
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function update(Request $request, User $user)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'password' => 'nullable|string|min:8',
-            'role' => ['required', Rule::in(['admin', 'doctor', 'patient'])],
-        ]);
-
-        $data = [
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'role' => $validated['role'],
-        ];
-
-        if (!empty($validated['password'])) {
-            $data['password'] = Hash::make($validated['password']);
-        }
-
-        $user->update($data);
-
-        \App\Services\ActivityLogger::log('Memperbarui data pengguna: ' . $user->email);
-
-        return redirect()->route('admin.users.index')->with('success', 'Data pengguna berhasil diperbarui.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 
     public function destroy(User $user)
     {
-        if ($user->id === auth()->id()) {
-            return redirect()->route('admin.users.index')->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
-        }
-
-        $email = $user->email;
-        $user->delete();
-
-        \App\Services\ActivityLogger::log('Menghapus pengguna: ' . $email);
-
-        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus.');
+        abort(403, 'Akses ditolak. Admin hanya dapat melihat data.');
     }
 }
