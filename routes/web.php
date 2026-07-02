@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     // Doctor Routes
     Route::middleware('role:doctor')->prefix('doctor')->name('doctor.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Doctor\DashboardController::class, 'index'])->name('dashboard');
+        Route::put('/dashboard/profile', [\App\Http\Controllers\Doctor\DashboardController::class, 'updateProfile'])->name('profile.update');
         Route::get('patients', [\App\Http\Controllers\Doctor\PatientController::class, 'index'])->name('patients.index');
         Route::resource('medical-records', \App\Http\Controllers\Doctor\MedicalRecordController::class);
         Route::get('medical-records/{medical_record}/pdf', [\App\Http\Controllers\Doctor\MedicalRecordController::class, 'exportPdf'])->name('medical-records.pdf');
@@ -49,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:patient')->prefix('patient')->name('patient.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Patient\DashboardController::class, 'index'])->name('dashboard');
         Route::post('/dashboard/profile', [\App\Http\Controllers\Patient\DashboardController::class, 'storeProfile'])->name('profile.store');
+        Route::put('/dashboard/profile', [\App\Http\Controllers\Patient\DashboardController::class, 'updateProfile'])->name('profile.update');
         Route::get('medical-records', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'index'])->name('medical-records.index');
         Route::get('medical-records/{medical_record}', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'show'])->name('medical-records.show');
         Route::get('medical-records/{medical_record}/pdf', [\App\Http\Controllers\Patient\MedicalRecordController::class, 'exportPdf'])->name('medical-records.pdf');

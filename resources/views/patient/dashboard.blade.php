@@ -54,7 +54,7 @@
                         </div>
                         <div>
                             <label for="blood_type" class="block text-sm font-bold text-slate-700 mb-1">Golongan Darah</label>
-                            <select name="blood_type" id="blood_type" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
+                            <select name="blood_type" id="blood_type" translate="no" class="notranslate mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
                                 <option value="">Pilih Golongan Darah (Opsional)</option>
                                 <option value="A" {{ old('blood_type') == 'A' ? 'selected' : '' }}>A</option>
                                 <option value="B" {{ old('blood_type') == 'B' ? 'selected' : '' }}>B</option>
@@ -103,13 +103,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <!-- Personal Information Card -->
             <div class="lg:col-span-1">
-                <div class="glass-card rounded-2xl overflow-hidden h-full">
-                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                <div class="glass-card rounded-2xl overflow-hidden">
+                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
                         <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-id-card text-blue-500"></i> Demografi
                         </h3>
+                        <button onclick="toggleEditProfile()" class="text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg border border-blue-100 transition-colors">
+                            <i class="fa-solid fa-user-pen mr-1"></i> Edit Profil
+                        </button>
                     </div>
-                    <div class="p-6 space-y-6">
+
+                    <!-- View Profile Section -->
+                    <div id="profile-view-section" class="p-6 space-y-6 @if($errors->any()) hidden @endif">
                         <div>
                             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nama Lengkap</p>
                             <p class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -130,10 +135,20 @@
                             </div>
                             <div>
                                 <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Golongan Darah</p>
-                                <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 font-bold border border-red-200">
+                                <div translate="no" class="notranslate inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 font-bold border border-red-200">
                                     {{ $patient->blood_type ?? '-' }}
                                 </div>
                             </div>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nomor Telepon/HP</p>
+                            <p class="text-base font-medium text-slate-700">{{ $patient->phone_number }}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Alamat Lengkap</p>
+                            <p class="text-base font-medium text-slate-700">{{ $patient->address }}</p>
                         </div>
                         
                         <div class="pt-4 mt-4 border-t border-slate-100">
@@ -142,6 +157,66 @@
                                 <span>Data Anda dilindungi dengan enkripsi ChaCha20.</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Edit Profile Section -->
+                    <div id="profile-edit-section" class="p-6 space-y-4 @if(!$errors->any()) hidden @endif">
+                        <form action="{{ route('patient.profile.update') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div>
+                                <label for="edit_nik" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" name="nik" id="edit_nik" value="{{ old('nik', $patient->nik) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required placeholder="16 digit NIK">
+                                @error('nik') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_full_name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                                <input type="text" name="full_name" id="edit_full_name" value="{{ old('full_name', $patient->full_name) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                                @error('full_name') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_date_of_birth" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Tanggal Lahir</label>
+                                <input type="date" name="date_of_birth" id="edit_date_of_birth" value="{{ old('date_of_birth', $patient->date_of_birth) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                                @error('date_of_birth') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_gender" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Jenis Kelamin</label>
+                                <select name="gender" id="edit_gender" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                                    <option value="Male" {{ old('gender', $patient->gender) == 'Male' ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="Female" {{ old('gender', $patient->gender) == 'Female' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+                                @error('gender') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_blood_type" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Golongan Darah</label>
+                                <select name="blood_type" id="edit_blood_type" translate="no" class="notranslate block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
+                                    <option value="">Pilih Golongan Darah (Opsional)</option>
+                                    <option value="A" {{ old('blood_type', $patient->blood_type) == 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ old('blood_type', $patient->blood_type) == 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="AB" {{ old('blood_type', $patient->blood_type) == 'AB' ? 'selected' : '' }}>AB</option>
+                                    <option value="O" {{ old('blood_type', $patient->blood_type) == 'O' ? 'selected' : '' }}>O</option>
+                                </select>
+                                @error('blood_type') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_phone_number" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nomor Telepon/HP</label>
+                                <input type="text" name="phone_number" id="edit_phone_number" value="{{ old('phone_number', $patient->phone_number) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>
+                                @error('phone_number') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_address" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Alamat Lengkap</label>
+                                <textarea name="address" id="edit_address" rows="3" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors" required>{{ old('address', $patient->address) }}</textarea>
+                                @error('address') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div class="flex gap-2 justify-end pt-2">
+                                <button type="button" onclick="toggleEditProfile()" class="px-4 py-2 border border-slate-200 text-slate-700 font-bold rounded-lg text-xs hover:bg-slate-50 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit" class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg text-xs hover:bg-blue-700 transition-colors shadow-sm">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -199,5 +274,18 @@
                 </div>
             </div>
         </div>
+    @endif
+
+    @if($patient)
+    <script>
+        function toggleEditProfile() {
+            const viewSection = document.getElementById('profile-view-section');
+            const editSection = document.getElementById('profile-edit-section');
+            if (viewSection && editSection) {
+                viewSection.classList.toggle('hidden');
+                editSection.classList.toggle('hidden');
+            }
+        }
+    </script>
     @endif
 </x-app-layout>

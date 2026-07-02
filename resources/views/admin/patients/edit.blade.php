@@ -70,7 +70,7 @@
                         
                         <div>
                             <label for="blood_type" class="block text-sm font-bold text-slate-700 mb-1">Golongan Darah</label>
-                            <select name="blood_type" id="blood_type" class="mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
+                            <select name="blood_type" id="blood_type" translate="no" class="notranslate mt-1 block w-full border-slate-300 rounded-xl shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors">
                                 <option value="">Tidak Tahu</option>
                                 @foreach(['A', 'B', 'AB', 'O', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $bt)
                                     <option value="{{ $bt }}" {{ old('blood_type', $patient->blood_type) == $bt ? 'selected' : '' }}>{{ $bt }}</option>

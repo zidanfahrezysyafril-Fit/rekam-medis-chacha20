@@ -82,48 +82,140 @@
         </div>
 
         <!-- Quick Actions Sidebar -->
-        <div class="glass-card rounded-2xl p-6 h-fit">
-            <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3 flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-amber-500"></i> Aksi Cepat
-            </h3>
-            
-            <div class="space-y-3">
-                <a href="{{ route('doctor.medical-records.create') }}" class="group block p-4 rounded-xl border border-blue-100 bg-blue-50 hover:bg-blue-600 hover:border-blue-600 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-white text-blue-600 group-hover:text-blue-600 flex items-center justify-center font-bold shadow-sm">
-                                <i class="fa-solid fa-file-circle-plus"></i>
-                            </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">Buat Rekam Medis</span>
+        <div class="space-y-8 lg:col-span-1">
+            <!-- Profil Saya Card -->
+            <div class="glass-card rounded-2xl overflow-hidden">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-user-doctor text-indigo-500"></i> Profil Saya
+                    </h3>
+                    @if($doctor)
+                    <button onclick="toggleEditProfile()" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-2.5 py-1.5 rounded-lg border border-indigo-100 transition-colors">
+                        <i class="fa-solid fa-user-pen mr-1"></i> Edit
+                    </button>
+                    @endif
+                </div>
+
+                @if($doctor)
+                    <!-- View Section -->
+                    <div id="profile-view-section" class="p-6 space-y-4 @if($errors->any()) hidden @endif">
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Nama Dokter</p>
+                            <p class="text-base font-bold text-slate-900">dr. {{ $doctor->doctor_name }}</p>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Nomor SIP</p>
+                            <p class="text-sm font-medium text-slate-700 font-mono bg-slate-50 px-2 py-1 rounded border border-slate-100 w-fit">{{ $doctor->sip_number }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Spesialisasi</p>
+                            <p class="text-sm font-semibold text-indigo-600 bg-indigo-50/50 px-2.5 py-1 rounded-full border border-indigo-100/50 w-fit">{{ $doctor->specialization }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">No. Telepon / HP</p>
+                            <p class="text-sm font-medium text-slate-700">{{ $doctor->phone_number }}</p>
+                        </div>
                     </div>
-                </a>
+
+                    <!-- Edit Section -->
+                    <div id="profile-edit-section" class="p-6 space-y-4 @if(!$errors->any()) hidden @endif">
+                        <form action="{{ route('doctor.profile.update') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div>
+                                <label for="edit_doctor_name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nama Lengkap (dengan dr.)</label>
+                                <input type="text" name="doctor_name" id="edit_doctor_name" value="{{ old('doctor_name', $doctor->doctor_name) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 transition-colors" required>
+                                @error('doctor_name') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_sip_number" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nomor SIP</label>
+                                <input type="text" name="sip_number" id="edit_sip_number" value="{{ old('sip_number', $doctor->sip_number) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 transition-colors" required>
+                                @error('sip_number') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_specialization" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Spesialisasi</label>
+                                <input type="text" name="specialization" id="edit_specialization" value="{{ old('specialization', $doctor->specialization) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 transition-colors" required>
+                                @error('specialization') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div>
+                                <label for="edit_phone_number" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">No. Telepon / HP</label>
+                                <input type="text" name="phone_number" id="edit_phone_number" value="{{ old('phone_number', $doctor->phone_number) }}" class="block w-full border-slate-300 rounded-xl shadow-sm text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 transition-colors" required>
+                                @error('phone_number') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
+                            </div>
+                            <div class="flex gap-2 justify-end pt-2">
+                                <button type="button" onclick="toggleEditProfile()" class="px-3 py-1.5 border border-slate-200 text-slate-700 font-bold rounded-lg text-xs hover:bg-slate-50 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit" class="px-3 py-1.5 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors shadow-sm">
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                @else
+                    <div class="p-6 text-center">
+                        <p class="text-sm text-slate-500">Profil dokter belum diatur. Hubungi administrator sistem.</p>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="glass-card rounded-2xl p-6 h-fit">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-500"></i> Aksi Cepat
+                </h3>
                 
-                <a href="{{ route('doctor.patients.index') }}" class="group block p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-address-book"></i>
+                <div class="space-y-3">
+                    <a href="{{ route('doctor.medical-records.create') }}" class="group block p-4 rounded-xl border border-blue-100 bg-blue-50 hover:bg-blue-600 hover:border-blue-600 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-white text-blue-600 group-hover:text-blue-600 flex items-center justify-center font-bold shadow-sm">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                </div>
+                                <span class="font-bold text-slate-700 group-hover:text-white">Buat Rekam Medis</span>
                             </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">Daftar Pasien</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
-                    </div>
-                </a>
-                
-                <a href="{{ route('doctor.medical-records.index') }}" class="group block p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-laptop-medical"></i>
+                    </a>
+                    
+                    <a href="{{ route('doctor.patients.index') }}" class="group block p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-address-book"></i>
+                                </div>
+                                <span class="font-bold text-slate-700 group-hover:text-white">Daftar Pasien</span>
                             </div>
-                            <span class="font-bold text-slate-700 group-hover:text-white">Lihat Semua Rekam Medis</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
                         </div>
-                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
-                    </div>
-                </a>
+                    </a>
+                    
+                    <a href="{{ route('doctor.medical-records.index') }}" class="group block p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 group-hover:bg-slate-700 group-hover:text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-laptop-medical"></i>
+                                </div>
+                                <span class="font-bold text-slate-700 group-hover:text-white">Lihat Semua Rekam Medis</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-white"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+    @if($doctor)
+    <script>
+        function toggleEditProfile() {
+            const viewSection = document.getElementById('profile-view-section');
+            const editSection = document.getElementById('profile-edit-section');
+            if (viewSection && editSection) {
+                viewSection.classList.toggle('hidden');
+                editSection.classList.toggle('hidden');
+            }
+        }
+    </script>
+    @endif
 </x-app-layout>
