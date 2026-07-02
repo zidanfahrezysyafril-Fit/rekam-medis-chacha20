@@ -17,6 +17,10 @@
                 <input type="text" name="search" value="{{ request('search') }}" class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out shadow-sm" placeholder="Cari nama atau spesialisasi...">
             </div>
         </form>
+        
+        <a href="{{ route('admin.doctors.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-xl font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150 shadow-md">
+            <i class="fa-solid fa-plus mr-2"></i> Tambah Dokter
+        </a>
     </div>
 
     @if(session('success'))
@@ -36,6 +40,7 @@
                         <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Dokter</th>
                         <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">SIP</th>
                         <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Kontak</th>
+                        <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-slate-200">
@@ -47,16 +52,30 @@
                                         <i class="fa-solid fa-user-doctor"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-bold text-slate-900">{{ $doctor->doctor_name }}</div>
-                                        <div class="text-sm text-slate-500">{{ $doctor->specialization }}</div>
+                                        <div class="text-sm font-bold text-slate-900" title="Terenkripsi">{{ $doctor->doctor_name }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></div>
+                                        <div class="text-sm text-slate-500" title="Terenkripsi">{{ $doctor->specialization }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-slate-100 text-slate-800 border border-slate-200 font-mono">{{ $doctor->sip_number }}</span>
+                                <span class="px-3 py-1 inline-flex items-center gap-1 text-xs leading-5 font-semibold rounded-full bg-slate-100 text-slate-800 border border-slate-200 font-mono" title="Terenkripsi">{{ $doctor->sip_number }} <i class="fa-solid fa-lock text-emerald-500"></i></span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                                <i class="fa-solid fa-phone text-slate-400 mr-2"></i>{{ $doctor->phone_number }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500" title="Terenkripsi">
+                                <i class="fa-solid fa-phone text-slate-400 mr-2"></i>{{ $doctor->phone_number }} <i class="fa-solid fa-lock text-emerald-500 ml-1"></i>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex justify-end gap-2">
+                                    <a href="{{ route('admin.doctors.edit', $doctor) }}" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 p-2 rounded-lg transition-colors" title="Edit">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data dokter ini? Akun pengguna terkait juga akan dihapus.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-2 rounded-lg transition-colors" title="Hapus">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

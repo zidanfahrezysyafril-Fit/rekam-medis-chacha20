@@ -15,31 +15,47 @@ class EncryptionDemoController extends Controller
     public function process(\Illuminate\Http\Request $request)
     {
         $request->validate([
-            'plaintext' => 'required|string',
+            'action' => 'required|in:encrypt,decrypt',
         ]);
 
-        $plaintext = $request->input('plaintext');
+        $action = $request->input('action');
         $encryptionService = app(\App\Services\EncryptionService::class);
 
-        // Measure Encryption Time
-        $startEncrypt = microtime(true);
-        $encryptedData = $encryptionService->encrypt($plaintext);
-        $endEncrypt = microtime(true);
-        $encryptTime = ($endEncrypt - $startEncrypt) * 1000; // in milliseconds
+        if ($action === 'encrypt') {
+            $request->validate(['plaintext' => 'required|string']);
+            
+            $startEncrypt = microtime(true);
+            $encryptedData = $encryptionService->encrypt($request->input('plaintext'));
+            $encryptTime = (microtime(true) - $startEncrypt) * 1000;
 
-        // Measure Decryption Time
-        $startDecrypt = microtime(true);
-        $decryptedText = $encryptionService->decrypt($encryptedData['ciphertext'], $encryptedData['nonce']);
-        $endDecrypt = microtime(true);
-        $decryptTime = ($endDecrypt - $startDecrypt) * 1000; // in milliseconds
+            return view('admin.encryption-demo', [
+                'action_taken' => 'encrypt',
+                'plaintext' => $request->input('plaintext'),
+                'ciphertext' => $encryptedData['ciphertext'],
+                'nonce' => $encryptedData['nonce'],
+                'encryptTime' => round($encryptTime, 4),
+            ]);
+        } else {
+            $request->validate([
+                'ciphertext_input' => 'required|string',
+                'nonce_input' => 'required|string'
+            ]);
+            
+            try {
+                $startDecrypt = microtime(true);
+                $decryptedText = $encryptionService->decrypt($request->input('ciphertext_input'), $request->input('nonce_input'));
+                $decryptTime = (microtime(true) - $startDecrypt) * 1000;
 
-        return view('admin.encryption-demo', [
-            'plaintext' => $plaintext,
-            'ciphertext' => $encryptedData['ciphertext'],
-            'nonce' => $encryptedData['nonce'],
-            'decryptedText' => $decryptedText,
-            'encryptTime' => round($encryptTime, 4),
-            'decryptTime' => round($decryptTime, 4),
-        ]);
+                return view('admin.encryption-demo', [
+                    'action_taken' => 'decrypt',
+                    'ciphertext_input' => $request->input('ciphertext_input'),
+                    'nonce_input' => $request->input('nonce_input'),
+                    'decryptedText' => $decryptedText,
+                    'decryptTime' => round($decryptTime, 4),
+                ]);
+            } catch (\Exception $e) {
+                return back()->withErrors(['decrypt_error' => 'Gagal mendekripsi data. Pastikan Ciphertext dan Nonce valid.']);
+            }
+        }
     }
 }

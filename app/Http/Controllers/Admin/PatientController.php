@@ -17,8 +17,7 @@ class PatientController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('nik', 'like', "%{$search}%");
+            $query->where('full_name', 'like', "%{$search}%");
         }
 
         $patients = $query->latest()->paginate(10);

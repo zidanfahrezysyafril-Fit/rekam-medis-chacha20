@@ -9,6 +9,7 @@ class Patient extends Model
     use \App\Traits\Encryptable;
 
     protected $encryptable = [
+        'nik',
         'address',
         'phone_number',
         'blood_type',
@@ -17,6 +18,7 @@ class Patient extends Model
 
     protected $fillable = [
         'nik',
+        'nik_hash',
         'full_name',
         'date_of_birth',
         'gender',

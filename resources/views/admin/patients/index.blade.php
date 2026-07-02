@@ -14,7 +14,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
                 </div>
-                <input type="text" name="search" value="{{ request('search') }}" class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out shadow-sm" placeholder="Cari nama atau NIK...">
+                <input type="text" name="search" value="{{ request('search') }}" class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out shadow-sm" placeholder="Cari nama pasien...">
             </div>
         </form>
     </div>
@@ -48,16 +48,16 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-bold text-slate-900">{{ $patient->full_name }}</div>
-                                        <div class="text-xs text-slate-500 font-mono">NIK: {{ $patient->nik }}</div>
+                                        <div class="text-xs text-slate-500 font-mono" title="Terenkripsi">NIK: {{ $patient->nik }} <i class="fa-solid fa-lock text-emerald-500 ml-1"></i></div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-900">{{ \Carbon\Carbon::parse($patient->date_of_birth)->age }} Tahun ({{ $patient->gender == 'Male' ? 'Laki-laki' : 'Perempuan' }})</div>
-                                <div class="text-xs text-slate-500">Gol. Darah: <span class="font-bold text-red-500">{{ $patient->blood_type ?? '-' }}</span></div>
+                                <div class="text-sm text-slate-900" title="Terenkripsi">{{ \Carbon\Carbon::parse($patient->date_of_birth)->age }} Tahun ({{ $patient->gender == 'Male' ? 'Laki-laki' : 'Perempuan' }}) <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></div>
+                                <div class="text-xs text-slate-500" title="Terenkripsi">Gol. Darah: <span class="font-bold text-red-500">{{ $patient->blood_type ?? '-' }}</span> <i class="fa-solid fa-lock text-emerald-500 ml-1"></i></div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                                <i class="fa-solid fa-phone text-slate-400 mr-2"></i>{{ $patient->phone_number }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500" title="Terenkripsi">
+                                <i class="fa-solid fa-phone text-slate-400 mr-2"></i>{{ $patient->phone_number }} <i class="fa-solid fa-lock text-emerald-500 ml-1"></i>
                             </td>
                         </tr>
                     @empty

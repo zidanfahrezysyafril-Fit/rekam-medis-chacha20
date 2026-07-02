@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Patient::create([
             'nik' => 'patient@emr.com', // Matching email for demo purpose
+            'nik_hash' => hash_hmac('sha256', 'patient@emr.com', config('app.key')),
             'full_name' => 'Jane Smith',
             'date_of_birth' => '1990-01-01',
             'gender' => 'Female',

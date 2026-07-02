@@ -125,30 +125,30 @@
                         
                         <div>
                             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">NIK (Nomor Induk Kependudukan)</p>
-                            <p class="text-base font-medium text-slate-700 font-mono">{{ $patient->nik }}</p>
+                            <p class="text-base font-medium text-slate-700 font-mono" title="Terenkripsi">{{ $patient->nik }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></p>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tanggal Lahir</p>
-                                <p class="text-base font-medium text-slate-700">{{ \Carbon\Carbon::parse($patient->date_of_birth)->format('d M Y') }}</p>
+                                <p class="text-base font-medium text-slate-700" title="Terenkripsi">{{ \Carbon\Carbon::parse($patient->date_of_birth)->format('d M Y') }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></p>
                             </div>
                             <div>
                                 <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Golongan Darah</p>
-                                <div translate="no" class="notranslate inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 font-bold border border-red-200">
-                                    {{ $patient->blood_type ?? '-' }}
+                                <div translate="no" class="notranslate inline-flex items-center justify-center min-w-8 px-2 h-8 rounded-lg bg-red-100 text-red-600 font-bold border border-red-200" title="Terenkripsi">
+                                    {{ $patient->blood_type ?? '-' }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-[10px]"></i>
                                 </div>
                             </div>
                         </div>
 
                         <div>
                             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nomor Telepon/HP</p>
-                            <p class="text-base font-medium text-slate-700">{{ $patient->phone_number }}</p>
+                            <p class="text-base font-medium text-slate-700" title="Terenkripsi">{{ $patient->phone_number }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></p>
                         </div>
 
                         <div>
                             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Alamat Lengkap</p>
-                            <p class="text-base font-medium text-slate-700">{{ $patient->address }}</p>
+                            <p class="text-base font-medium text-slate-700" title="Terenkripsi">{{ $patient->address }} <i class="fa-solid fa-lock text-emerald-500 ml-1 text-xs"></i></p>
                         </div>
                         
                         <div class="pt-4 mt-4 border-t border-slate-100">
