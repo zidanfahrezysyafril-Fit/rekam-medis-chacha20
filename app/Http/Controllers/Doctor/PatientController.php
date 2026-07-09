@@ -14,8 +14,9 @@ class PatientController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
+            $searchHash = hash_hmac('sha256', $search, config('app.key'));
             $query->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('nik', 'like', "%{$search}%");
+                  ->orWhere('nik_hash', $searchHash);
         }
 
         $patients = $query->latest()->paginate(10);

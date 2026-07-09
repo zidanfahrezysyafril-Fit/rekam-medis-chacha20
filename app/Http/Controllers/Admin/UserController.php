@@ -16,8 +16,9 @@ class UserController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
+            $searchHash = hash_hmac('sha256', $search, config('app.key'));
             $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+                  ->orWhere('email_hash', $searchHash);
         }
 
         $users = $query->latest()->paginate(10);

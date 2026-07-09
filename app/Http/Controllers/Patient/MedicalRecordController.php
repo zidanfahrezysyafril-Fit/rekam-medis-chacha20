@@ -9,7 +9,8 @@ class MedicalRecordController extends Controller
 {
     public function index()
     {
-        $patient = \App\Models\Patient::where('nik', auth()->user()->email)->orWhere('full_name', auth()->user()->name)->first();
+        $emailHashForNik = hash_hmac('sha256', auth()->user()->email, config('app.key'));
+        $patient = \App\Models\Patient::where('nik_hash', $emailHashForNik)->orWhere('full_name', auth()->user()->name)->first();
         $records = [];
         if ($patient) {
             $records = \App\Models\MedicalRecord::where('patient_id', $patient->id)->with('doctor')->latest()->paginate(10);
@@ -19,7 +20,8 @@ class MedicalRecordController extends Controller
 
     public function show(\App\Models\MedicalRecord $medicalRecord)
     {
-        $patient = \App\Models\Patient::where('nik', auth()->user()->email)->orWhere('full_name', auth()->user()->name)->first();
+        $emailHashForNik = hash_hmac('sha256', auth()->user()->email, config('app.key'));
+        $patient = \App\Models\Patient::where('nik_hash', $emailHashForNik)->orWhere('full_name', auth()->user()->name)->first();
         if (!$patient || $medicalRecord->patient_id !== $patient->id) {
             abort(403);
         }
@@ -43,7 +45,8 @@ class MedicalRecordController extends Controller
 
     public function exportPdf(\App\Models\MedicalRecord $medicalRecord)
     {
-        $patient = \App\Models\Patient::where('nik', auth()->user()->email)->orWhere('full_name', auth()->user()->name)->first();
+        $emailHashForNik = hash_hmac('sha256', auth()->user()->email, config('app.key'));
+        $patient = \App\Models\Patient::where('nik_hash', $emailHashForNik)->orWhere('full_name', auth()->user()->name)->first();
         if (!$patient || $medicalRecord->patient_id !== $patient->id) {
             abort(403);
         }

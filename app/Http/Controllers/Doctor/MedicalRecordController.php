@@ -20,9 +20,10 @@ class MedicalRecordController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->whereHas('patient', function($q) use ($search) {
+            $searchHash = hash_hmac('sha256', $search, config('app.key'));
+            $query->whereHas('patient', function($q) use ($search, $searchHash) {
                 $q->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('nik', 'like', "%{$search}%");
+                  ->orWhere('nik_hash', $searchHash);
             })->orWhere('medical_record_number', 'like', "%{$search}%");
         }
 
