@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin System',
             'email' => 'admin@emr.com',
             'email_hash' => hash_hmac('sha256', 'admin@emr.com', config('app.key')),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Password123!'),
             'role' => 'admin',
+            'email_verified_at' => now(),
         ]);
 
         // Doctor User
@@ -29,8 +30,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Dr. John Doe',
             'email' => 'doctor@emr.com',
             'email_hash' => hash_hmac('sha256', 'doctor@emr.com', config('app.key')),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Password123!'),
             'role' => 'doctor',
+            'email_verified_at' => now(),
         ]);
 
         \App\Models\Doctor::create([
@@ -45,8 +47,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Jane Smith',
             'email' => 'patient@emr.com',
             'email_hash' => hash_hmac('sha256', 'patient@emr.com', config('app.key')),
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Password123!'),
             'role' => 'patient',
+            'email_verified_at' => now(),
         ]);
 
         \App\Models\Patient::create([
@@ -61,3 +64,4 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+
