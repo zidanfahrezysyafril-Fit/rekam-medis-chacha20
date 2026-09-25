@@ -54,10 +54,15 @@ class RegisteredUserController extends Controller
             'otp_expires_at' => now()->addMinutes(5),
         ]);
 
-        Mail::to($user->email)->send(new OtpVerificationMail($otp, $user->name));
+        try {
+            Mail::to($user->email)->send(new OtpVerificationMail($otp, $user->name));
+        } catch (\Exception $e) {
+            // Log mail failure without crashing registration
+            \Illuminate\Support\Facades\Log::warning('OTP Mail delivery failed: ' . $e->getMessage());
+        }
 
         session(['otp_user_id' => $user->id]);
 
-        return redirect()->route('otp.verify');
+        return redirect()->route('otp.verify')->with('info', 'Kode OTP telah dikirimkan ke email Anda.');
     }
 }

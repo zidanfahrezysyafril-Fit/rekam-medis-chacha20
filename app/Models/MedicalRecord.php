@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class MedicalRecord extends Model
 {
+    use \App\Traits\Encryptable;
+
+    protected $encryptable = [
+        'complaint',
+        'medical_history',
+        'diagnosis',
+        'treatment',
+        'prescription',
+        'doctor_notes',
+    ];
+
     protected $fillable = [
         'medical_record_number',
         'patient_id',

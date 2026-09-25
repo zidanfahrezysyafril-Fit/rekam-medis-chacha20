@@ -69,7 +69,11 @@ class OtpController extends Controller
             'otp_expires_at' => now()->addMinutes(5),
         ]);
 
-        Mail::to($user->email)->send(new OtpVerificationMail($otp, $user->name));
+        try {
+            Mail::to($user->email)->send(new OtpVerificationMail($otp, $user->name));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('OTP Resend Mail failed: ' . $e->getMessage());
+        }
 
         return back()->with('success', 'Kode OTP baru telah dikirim ke email kamu.');
     }
