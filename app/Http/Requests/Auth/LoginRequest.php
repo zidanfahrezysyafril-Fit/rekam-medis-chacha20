@@ -42,13 +42,16 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $emailHash = hash_hmac('sha256', $this->email, config('app.key'));
+        $email = strtolower(trim((string) $this->input('email')));
+        $password = (string) $this->input('password');
+
+        $emailHash = hash_hmac('sha256', $email, config('app.key'));
         
-        if (! Auth::attempt(['email_hash' => $emailHash, 'password' => $this->password], $this->boolean('remember'))) {
+        if (! Auth::attempt(['email_hash' => $emailHash, 'password' => $password], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => __('auth.failed'),
             ]);
         }
 
@@ -71,7 +74,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'email' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -86,3 +89,4 @@ class LoginRequest extends FormRequest
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
 }
+

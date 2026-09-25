@@ -44,7 +44,7 @@ class DoctorController extends Controller
                     }
                 }
             ],
-            'password' => 'required|string|min:8',
+            'password' => ['required', \Illuminate\Validation\Rules\Password::defaults()],
             'sip_number' => 'required|string|max:50',
             'specialization' => 'required|string|max:100',
             'phone_number' => 'required|string|max:20',

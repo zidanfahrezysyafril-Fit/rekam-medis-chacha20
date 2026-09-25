@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use App\Services\ActivityLogger;
 
 class UserController extends Controller
@@ -44,7 +45,7 @@ class UserController extends Controller
                     }
                 }
             ],
-            'password' => 'required|string|min:8',
+            'password' => ['required', Password::defaults()],
             'role' => 'required|in:admin,doctor,patient',
         ]);
 
@@ -72,12 +73,25 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'email' => [
+                'required', 'string', 'email', 'max:255',
+                function ($attribute, $value, $fail) use ($user) {
+                    $hash = hash_hmac('sha256', $value, config('app.key'));
+                    if (User::where('email_hash', $hash)->where('id', '!=', $user->id)->exists()) {
+                        $fail('Email sudah terdaftar.');
+                    }
+                }
+            ],
             'role' => 'required|in:admin,doctor,patient',
-            'password' => 'nullable|string|min:8',
+            'password' => ['nullable', Password::defaults()],
         ]);
+
+        $emailHash = hash_hmac('sha256', $validated['email'], config('app.key'));
 
         $data = [
             'name' => $validated['name'],
+            'email' => $validated['email'],
+            'email_hash' => $emailHash,
             'role' => $validated['role'],
         ];
 

@@ -78,6 +78,9 @@
                     <i id="password-toggle-icon" class="fa-solid fa-eye text-sm"></i>
                 </button>
             </div>
+            <p class="mt-1.5 text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
+                <i class="fa-solid fa-shield-halved text-cyan-600 text-xs"></i> Minimal 8 karakter (kombinasi huruf besar, huruf kecil, angka, & simbol).
+            </p>
             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
         </div>
 

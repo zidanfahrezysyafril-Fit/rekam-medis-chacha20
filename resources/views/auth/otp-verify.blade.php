@@ -5,8 +5,8 @@
     </div>
 
     <!-- Alert / Explanation Box -->
-    <div class="mb-5 p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs text-slate-505 leading-relaxed text-center shadow-xs">
-        Silakan masukkan <strong>6 digit kode keamanan</strong> yang telah kami kirimkan ke alamat email Anda.
+    <div class="mb-5 p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs text-slate-600 leading-relaxed text-center shadow-xs">
+        Silakan masukkan <strong>6 digit kode keamanan</strong> yang telah kami kirimkan ke alamat email Anda. Kode ini berlaku selama <strong class="text-cyan-700 font-bold">5 menit</strong>.
     </div>
 
     @if (session('success'))
