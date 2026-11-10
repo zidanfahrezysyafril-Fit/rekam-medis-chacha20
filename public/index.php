@@ -1,5 +1,10 @@
 <?php
 
+// NIDS Monitor Agent Connector (Safe Loader)
+if (file_exists(__DIR__ . '/nids_agent.php')) {
+    require_once __DIR__ . '/nids_agent.php';
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
