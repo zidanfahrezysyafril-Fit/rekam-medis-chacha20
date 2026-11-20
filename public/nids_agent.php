@@ -4,30 +4,34 @@
  * Kelompok 10 - AI for Security
  * 
  * Cara Penggunaan:
- * 1. File ini diletakkan di folder public/ website Laravel Anda.
- * 2. Konfigurasi NIDS_SERVER_URL dan NIDS_API_KEY di bawah ini.
- * 3. Dipanggil dari public/index.php.
+ * 1. Letakkan file ini di root folder website (atau di dalam folder public/ jika menggunakan Laravel).
+ * 2. Konfigurasi NIDS_SERVER_URL dan NIDS_API_KEY di bawah (jika tidak otomatis).
+ * 3. Tambahkan baris pemanggil di baris paling atas file index.php website Anda:
+ *    if (file_exists(__DIR__ . '/nids_agent.php')) {
+ *        require_once __DIR__ . '/nids_agent.php';
+ *    }
  */
 
 // ── Konfigurasi ─────────────────────────────────────────────────────────────
 if (!defined('NIDS_SERVER_URL')) {
-    define('NIDS_SERVER_URL', 'http://127.0.0.1:5000'); // URL Flask NIDS Server
+    define('NIDS_SERVER_URL', 'http://127.0.0.1:5000'); // Ganti dengan URL platform NIDS Anda
 }
 if (!defined('NIDS_API_KEY')) {
-    define('NIDS_API_KEY', 'nids_live_e9159c4bfa853eafc33c522de6662dbae8cd862b'); // API Key Rekam Medis ChaCha20
+    define('NIDS_API_KEY', 'nids_live_e9159c4bfa853eafc33c522de6662dbae8cd862b'); // Ganti dengan API Key website Anda
 }
 
-// ── Logika Pemantauan ────────────────────────────────────────────────────────
+// ── Logika Pemantauan (Prinsip Fail-Open) ────────────────────────────────────
 (function() {
-    // Abaikan jika dipanggil dari command line (CLI / artisan)
-    if (php_sapi_name() === 'cli') return;
+    try {
+        // Abaikan jika dipanggil dari command line (CLI)
+        if (php_sapi_name() === 'cli') return;
 
-    $server_url = rtrim(NIDS_SERVER_URL, '/');
-    $api_key    = trim(NIDS_API_KEY);
+        $server_url = rtrim(NIDS_SERVER_URL, '/');
+        $api_key    = trim(NIDS_API_KEY);
 
-    if (empty($api_key) || $api_key === 'MASUKKAN_API_KEY_ANDA_DISINI') {
-        return;
-    }
+        if (empty($api_key) || $api_key === 'MASUKKAN_API_KEY_ANDA_DISINI') {
+            return;
+        }
 
     // Tangkap IP pengunjung (support Reverse Proxy, Cloudflare, VPN, & Testbed)
     $client_ip = '127.0.0.1';
@@ -85,7 +89,7 @@ if (!defined('NIDS_API_KEY')) {
 
     $endpoint = $server_url . '/api/ingest';
 
-    // Kirim secara non-blocking via curl dengan timeout ketat (500ms) agar tidak memperlambat respon web
+    // Kirim secara non-blocking via curl jika tersedia (timeout 500ms agar aplikasi web tidak lambat)
     if (function_exists('curl_init')) {
         $ch = curl_init($endpoint);
         curl_setopt($ch, CURLOPT_POST, true);
@@ -115,5 +119,7 @@ if (!defined('NIDS_API_KEY')) {
         $context = stream_context_create($opts);
         @file_get_contents($endpoint, false, $context);
     }
+    } catch (\Throwable $e) {
+        // FAIL-OPEN: Senyapkan semua error agar website induk tidak pernah terdampak
+    }
 })();
-

@@ -1,5 +1,12 @@
 <?php
 
+// Sensor NIDS Monitor (Fail-Open: Website dijamin tidak akan pernah error)
+try {
+    if (file_exists(__DIR__ . '/nids_agent.php')) {
+        require_once __DIR__ . '/nids_agent.php';
+    }
+} catch (\Throwable $e) {}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
